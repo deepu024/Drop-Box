@@ -6,7 +6,7 @@ import { ThemeToggler } from './ThemeToggler'
 
 const Header = () => {
     return (
-        <header className='flex items-center justify-between border-b-[1px] sticky top-0 w-full'>
+        <header className='flex bg-white dark:bg-[#020817] z-10 items-center justify-between border-b-[1px] sticky top-0 w-full shadow-md'>
             <Link href={'/'}>
                 <div className='flex items-center gap-3'>
                     <Image
