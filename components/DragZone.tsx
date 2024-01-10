@@ -1,5 +1,5 @@
 "use client";
-import { db, storage } from '@/firebase';
+import { db, storage } from '@/lib/firebase/page';
 import { cn } from '@/lib/utils';
 import { useUser } from '@clerk/nextjs';
 import { addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore';

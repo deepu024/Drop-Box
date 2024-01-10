@@ -1,6 +1,6 @@
 import DragZone from '@/components/DragZone'
 import TableWrapper from '@/components/table/TableWrapper';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase/page';
 import { FileType } from '@/typings';
 import { auth } from '@clerk/nextjs'
 import { collection, getDocs } from 'firebase/firestore';

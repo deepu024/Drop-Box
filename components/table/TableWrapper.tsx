@@ -7,7 +7,7 @@ import { columns } from './columns'
 import { useUser } from '@clerk/nextjs'
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { collection, getFirestore, orderBy, query } from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '@/lib/firebase/page';
 import { Skeleton } from "@/components/ui/skeleton"
 
 const TableWrapper = ({ skeletonFiles }: { skeletonFiles: FileType[] }) => {
