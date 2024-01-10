@@ -1,8 +1,12 @@
 "use client";
+import { db, storage } from '@/firebase';
 import { cn } from '@/lib/utils';
 import { useUser } from '@clerk/nextjs';
+import { addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import React, { useState } from 'react'
 import Dropzone from 'react-dropzone'
+import toast from 'react-hot-toast';
 
 const DragZone = () => {
 
@@ -28,9 +32,30 @@ const DragZone = () => {
         if (loading) return;
         if (!user) return;
         setLoading(true);
-
-
-
+        toast.loading("File Uploading...")
+        const collectionRef = collection(db, "users", user.id, "files");
+        const docRef = await addDoc(collectionRef, {
+            "fileName": image.name,
+            "addedDate": serverTimestamp(),
+            "fileSize": image.size,
+            "userId": user!.id,
+            "fullName": user!.fullName,
+            "fileType": image.type,
+            "profileImage": user!.imageUrl
+        });
+        const imageRef = ref(storage, `users/${user.id}/files/${docRef.id}`)
+        await uploadBytes(imageRef, image).then(async (snapshot) => {
+            const downloadUrl = await getDownloadURL(imageRef);
+            await updateDoc(docRef, {
+                downloadUrl: downloadUrl
+            }).then(() => {
+                toast.dismiss()
+                toast.success("File uploaded Successfully")
+            }).catch(() => {
+                toast.dismiss()
+                toast.error("Something went wrong!")
+            })
+        })
         setLoading(false);
     }
 
